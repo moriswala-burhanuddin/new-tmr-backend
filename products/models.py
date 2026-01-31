@@ -5,6 +5,16 @@ class Brand(models.Model):
     name = models.CharField(max_length=100)
     slug = models.SlugField(unique=True, blank=True, null=True)
     logo = models.ImageField(upload_to='brands/', blank=True, null=True)
+    description = models.TextField(blank=True)
+
+    # CMS / Page Content
+    hero_title = models.CharField(max_length=200, blank=True)
+    hero_subtitle = models.TextField(blank=True)
+    hero_image = models.ImageField(upload_to='brands/hero/', blank=True)
+    
+    content = models.TextField(blank=True, help_text="Main content (HTML/Text)")
+    html_content = models.TextField(blank=True, help_text="Additional Detail Text (HTML/Text)")
+    
     created_at = models.DateTimeField(auto_now_add=True)
 
     def save(self, *args, **kwargs):
@@ -34,7 +44,7 @@ class Category(models.Model):
 class Product(models.Model):
     name = models.CharField(max_length=200)
     slug = models.SlugField(unique=True, blank=True)
-    brand = models.ForeignKey(Brand, on_delete=models.CASCADE, related_name='products', null=True, blank=True)
+    brands = models.ManyToManyField(Brand, related_name='products', blank=True)
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, related_name='products', null=True, blank=True)
     
     # Specifications
@@ -49,6 +59,7 @@ class Product(models.Model):
     # SEO Fields
     meta_title = models.CharField(max_length=200, blank=True)
     meta_description = models.TextField(blank=True)
+    meta_keywords = models.TextField(blank=True, help_text="Meta keywords for search engines")
     og_image = models.ImageField(upload_to='products/og/', blank=True, help_text="Social Media Share Image")
     
     created_at = models.DateTimeField(auto_now_add=True)

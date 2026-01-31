@@ -40,11 +40,20 @@ class ContactInquiryAdmin(admin.ModelAdmin):
 
 @admin.register(WholesaleInquiry)
 class WholesaleInquiryAdmin(admin.ModelAdmin):
-    list_display = ('business_name', 'name', 'product_interested', 'created_at', 'is_resolved')
-    list_filter = ('is_resolved', 'created_at')
+    list_display = ('business_name', 'get_brands', 'get_products', 'created_at', 'is_resolved')
+    list_filter = ('is_resolved', 'created_at', 'brands_interested')
     search_fields = ('business_name', 'name')
     readonly_fields = ('created_at',)
+    filter_horizontal = ('products_interested', 'brands_interested')
     actions = [export_to_csv, 'mark_as_resolved']
+
+    def get_brands(self, obj):
+        return ", ".join([b.name for b in obj.brands_interested.all()])
+    get_brands.short_description = 'Brands'
+
+    def get_products(self, obj):
+        return ", ".join([p.name for p in obj.products_interested.all()])
+    get_products.short_description = 'Products'
 
     def mark_as_resolved(self, request, queryset):
         queryset.update(is_resolved=True)

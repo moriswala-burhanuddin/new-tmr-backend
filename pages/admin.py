@@ -7,7 +7,7 @@ class HomePageAdmin(admin.ModelAdmin):
         ('SEO', {'fields': ('seo_title', 'seo_description')}),
         ('Hero', {'fields': ('hero_title', 'hero_subtitle', 'hero_image', 'hero_image_1', 'hero_image_2', 'hero_image_3', 'hero_image_4', 'hero_image_5')}),
         ('Social Links', {'fields': ('facebook_url', 'instagram_url', 'tiktok_url', 'linkedin_url', 'youtube_url')}),
-        ('Content', {'fields': ('about_section_title', 'about_section_content', 'content')}),
+        ('Content', {'fields': ('about_section_title', 'about_section_content', 'content', 'html_content', 'clients_served_count', 'expert_support_text')}),
     )
 
     def has_add_permission(self, request):
@@ -17,7 +17,7 @@ class HomePageAdmin(admin.ModelAdmin):
 
 @admin.register(AboutPage)
 class AboutPageAdmin(admin.ModelAdmin):
-    fields = ('seo_title', 'seo_description', 'hero_title', 'hero_subtitle', 'hero_image', 'content')
+    fields = ('seo_title', 'seo_description', 'hero_title', 'hero_subtitle', 'hero_image', 'content', 'html_content', 'clients_served_count', 'expert_support_text')
 
 @admin.register(ContactPage)
 class ContactPageAdmin(admin.ModelAdmin):
@@ -25,8 +25,14 @@ class ContactPageAdmin(admin.ModelAdmin):
 
 @admin.register(WholesalePage)
 class WholesalePageAdmin(admin.ModelAdmin):
-    fields = ('seo_title', 'seo_description', 'hero_title', 'hero_subtitle', 'hero_image', 'content')
+    fields = ('seo_title', 'seo_description', 'hero_title', 'hero_subtitle', 'hero_image', 'content', 'html_content')
     
 @admin.register(BrandPageContent)
 class BrandPageContentAdmin(admin.ModelAdmin):
-    fields = ('seo_title', 'seo_description', 'hero_title', 'hero_subtitle', 'hero_image', 'content')
+    fields = ('seo_title', 'seo_description', 'hero_title', 'hero_subtitle', 'hero_image', 'content', 'html_content')
+
+    def has_add_permission(self, request):
+        return not BrandPageContent.objects.exists()
+
+    def has_delete_permission(self, request, obj=None):
+        return False

@@ -22,8 +22,8 @@ class WholesaleInquiry(models.Model):
     contact_number = models.CharField(max_length=20)
     
     # Interests
-    product_interested = models.ForeignKey('products.Product', on_delete=models.SET_NULL, null=True, blank=True)
-    brand_interested = models.ForeignKey('products.Brand', on_delete=models.SET_NULL, null=True, blank=True)
+    products_interested = models.ManyToManyField('products.Product', blank=True, related_name='wholesale_inquiries')
+    brands_interested = models.ManyToManyField('products.Brand', blank=True, related_name='wholesale_inquiries')
     
     details = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)

@@ -1,0 +1,6 @@
+SystemCheckError: System check identified some issues:
+
+ERRORS:
+<class 'leads.admin.WholesaleInquiryAdmin'>: (admin.E108) The value of 'list_display[2]' refers to 'product_interested', which is not a callable or attribute of 'WholesaleInquiryAdmin', or an attribute, method, or field on 'leads.WholesaleInquiry'.
+
+System check identified 1 issue (0 silenced).

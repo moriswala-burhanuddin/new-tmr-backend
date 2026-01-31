@@ -8,6 +8,7 @@ class Page(models.Model):
     # SEO Fields
     seo_title = models.CharField(max_length=200, blank=True, help_text="Browser tab title")
     seo_description = models.TextField(blank=True, help_text="Meta description for search engines")
+    seo_keywords = models.TextField(blank=True, help_text="Meta keywords for search engines")
     
     # Content
     hero_title = models.CharField(max_length=200, blank=True)
@@ -15,6 +16,7 @@ class Page(models.Model):
     hero_image = models.ImageField(upload_to='pages/hero/', blank=True)
     
     content = models.TextField(blank=True, help_text="Main content (HTML/Text)")
+    html_content = models.TextField(blank=True, help_text="Additional Detail Text (HTML/Text)")
     
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -52,11 +54,19 @@ class HomePage(Page):
     hero_image_3 = models.ImageField(upload_to='home/hero/', blank=True)
     hero_image_4 = models.ImageField(upload_to='home/hero/', blank=True)
     hero_image_5 = models.ImageField(upload_to='home/hero/', blank=True)
+
+    # Stats / Social Proof
+    clients_served_count = models.CharField(max_length=50, default="100+")
+    expert_support_text = models.CharField(max_length=100, default="24/7 EXPERT SUPPORT")
     
 class AboutPage(Page):
     class Meta:
         verbose_name = "About Page Content"
         verbose_name_plural = "About Page Content"
+
+    # Stats
+    clients_served_count = models.CharField(max_length=50, default="100+")
+    expert_support_text = models.CharField(max_length=100, default="24/7 EXPERT SUPPORT")
 
 class ContactPage(Page):
     class Meta:

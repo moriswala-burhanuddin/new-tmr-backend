@@ -35,6 +35,6 @@ class ProductViewSet(BaseProductViewSet):
             queryset = queryset.filter(category__slug=category_slug)
             
         if brand_id:
-            queryset = queryset.filter(brand__id=brand_id)
+            queryset = queryset.filter(brands__id=brand_id)
             
         return queryset
