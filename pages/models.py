@@ -59,6 +59,9 @@ class HomePage(Page):
     clients_served_count = models.CharField(max_length=50, default="100+")
     expert_support_text = models.CharField(max_length=100, default="24/7 EXPERT SUPPORT")
     
+    # Catalogue
+    catalogue_file = models.FileField(upload_to='catalogues/', blank=True, null=True, help_text="Upload the PDF catalogue")
+    
 class AboutPage(Page):
     class Meta:
         verbose_name = "About Page Content"
