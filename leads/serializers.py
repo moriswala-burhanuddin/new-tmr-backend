@@ -21,4 +21,4 @@ class WholesaleInquirySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = WholesaleInquiry
-        exclude = ('product_interested_old', 'brand_interested_old')
+        fields = '__all__'

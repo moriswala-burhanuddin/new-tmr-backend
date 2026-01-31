@@ -42,8 +42,8 @@ def send_wholesale_notification(sender, instance, created, **kwargs):
         Contact: {instance.name}
         Email: {instance.email}
         Phone: {instance.contact_number}
-        Brand Interest: {instance.brand_interested}
-        Product Interest: {instance.product_interested}
+        Brand Interest: {", ".join([b.name for b in instance.brands_interested.all()])}
+        Product Interest: {", ".join([p.name for p in instance.products_interested.all()])}
         
         Details:
         {instance.details}
