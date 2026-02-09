@@ -45,7 +45,7 @@ class Product(models.Model):
     name = models.CharField(max_length=200)
     slug = models.SlugField(unique=True, blank=True)
     brands = models.ManyToManyField(Brand, related_name='products', blank=True)
-    category = models.ForeignKey(Category, on_delete=models.SET_NULL, related_name='products', null=True, blank=True)
+    categories = models.ManyToManyField(Category, related_name='products', blank=True)
     
     # Specifications
     specifications = models.TextField(help_text="Detailed text specifications", blank=True)
@@ -72,3 +72,24 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+
+class HomeCategory(models.Model):
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='home_display')
+    title = models.CharField(max_length=100, blank=True, help_text="Override category name for home page display")
+    image = models.ImageField(upload_to='home_categories/', blank=True, null=True, help_text="Override category image for home page")
+    order = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        verbose_name_plural = "Home Categories"
+        ordering = ['order']
+
+    def __str__(self):
+        return self.title or self.category.name
+
+    def get_title(self):
+        return self.title or self.category.name
+
+    def get_image(self):
+        if self.image:
+            return self.image.url
+        return self.category.image.url if self.category.image else None

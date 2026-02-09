@@ -1,7 +1,7 @@
 from rest_framework import viewsets
 from rest_framework.permissions import IsAdminUser, AllowAny
-from .models import Brand, Category, Product
-from .serializers import BrandSerializer, CategorySerializer, ProductSerializer
+from .models import Brand, Category, Product, HomeCategory
+from .serializers import BrandSerializer, CategorySerializer, ProductSerializer, HomeCategorySerializer
 
 class BaseProductViewSet(viewsets.ModelViewSet):
     def get_permissions(self):
@@ -32,9 +32,15 @@ class ProductViewSet(BaseProductViewSet):
             queryset = queryset.filter(is_featured=True)
             
         if category_slug:
-            queryset = queryset.filter(category__slug=category_slug)
+            # support comma-separated slugs or multiple slugs in query params
+            category_slugs = category_slug.split(',')
+            queryset = queryset.filter(categories__slug__in=category_slugs).distinct()
             
         if brand_id:
             queryset = queryset.filter(brands__id=brand_id)
             
         return queryset
+
+class HomeCategoryViewSet(BaseProductViewSet):
+    queryset = HomeCategory.objects.all()
+    serializer_class = HomeCategorySerializer

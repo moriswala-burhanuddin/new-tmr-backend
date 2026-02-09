@@ -4,7 +4,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from rest_framework.routers import DefaultRouter
 
-from products.views import BrandViewSet, CategoryViewSet, ProductViewSet
+from products.views import BrandViewSet, CategoryViewSet, ProductViewSet, HomeCategoryViewSet
 from leads.views import ContactInquiryViewSet, WholesaleInquiryViewSet
 
 # Create a router and register our viewsets with it.
@@ -12,6 +12,7 @@ router = DefaultRouter()
 router.register(r'brands', BrandViewSet)
 router.register(r'categories', CategoryViewSet)
 router.register(r'products', ProductViewSet)
+router.register(r'home-categories', HomeCategoryViewSet)
 
 from pages.views import serve_react_app
 from django.urls import path, include, re_path
