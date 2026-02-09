@@ -92,4 +92,5 @@ class HomeCategory(models.Model):
     def get_image(self):
         if self.image:
             return self.image.url
-        return self.category.image.url if self.category.image else None
+        # Category doesn't have an image field, or it's empty
+        return getattr(self.category, 'image', None) and self.category.image.url or None
